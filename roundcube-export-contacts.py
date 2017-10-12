@@ -71,17 +71,13 @@ def get_contacts(mysql_cnx, user):
     return mysql_contacts
 
 
-def save_vcard(dirname, user, contact):
-    """Save data from vcard field to file.
+def save_vcard(out, vcard):
+    """Save `vcard` data to `out` file.
 
     Args:
-        dirname: output directory
-        user: User namedtuple
-        contact: Contact namedtuple
+        out: output file
+        vcard: vcard data
     """
-
-    filename = "%s_%s.vcf" % (user.email, user.id)
-    out = os.path.join(dirname, filename)
 
     if os.path.exists(out):
         print "Append to file %s" % out
@@ -89,7 +85,7 @@ def save_vcard(dirname, user, contact):
         print "Create file: %s" % out
 
     with codecs.open(out, "a", "utf-8") as fobj:
-        fobj.write(contact.vcard)
+        fobj.write(vcard)
         fobj.write("\n")
 
 
@@ -113,7 +109,9 @@ def main():
         contacts = get_contacts(mysql_cnx, user)
         for contact in contacts:
             contact = Contact(contact[0], contact[1], contact[2], contact[3])
-            save_vcard(args.out, user, contact)
+            filename = "%s_%s%s.vcf" % (user.email, user.id, "_deleted" if contact.deleted else "")
+            out = os.path.join(args.out, filename)
+            save_vcard(out, contact.vcard)
 
     mysql_cnx.close()
 
