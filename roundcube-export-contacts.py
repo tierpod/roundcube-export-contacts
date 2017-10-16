@@ -17,6 +17,11 @@ DEFAULT_CONFIG = "./config.json"
 DEFAULT_OUT = "./out"
 
 
+# structures
+User = namedtuple("User", ["id", "email"])
+Contact = namedtuple("Contact", ["email", "vcard", "words", "deleted"])
+
+
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--config", help="json config", default=DEFAULT_CONFIG)
@@ -98,10 +103,6 @@ def main():
 
     # connect to databases
     mysql_cnx = mysql.connector.connect(buffered=True, **config["mysql"])
-
-    # create basic structures
-    User = namedtuple("User", ["id", "email"])
-    Contact = namedtuple("Contact", ["email", "vcard", "words", "deleted"])
 
     users = get_users(mysql_cnx)
     for user in users:
