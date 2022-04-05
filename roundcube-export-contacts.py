@@ -85,9 +85,9 @@ def save_vcard(out, vcard):
     """
 
     if os.path.exists(out):
-        print "Append to file %s" % out
+        print("Append to file %s" % out)
     else:
-        print "Create file: %s" % out
+        print("Create file: %s" % out)
 
     with codecs.open(out, "a", "utf-8") as fobj:
         fobj.write(vcard)
