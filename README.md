@@ -17,3 +17,19 @@ where:
 * myemail@localhost - data from 'users.username'
 * 1 - data from 'users.user_id'
 * deleted - deleted vcards (contacts.del = 1)
+
+Installation
+------------
+
+Using virtual env:
+
+```bash
+# create venv
+make venv
+# enable venv
+source ./venv/bin/activate
+# install requirements
+make init
+# run
+./roundcube-export-contacts.py -h
+```
